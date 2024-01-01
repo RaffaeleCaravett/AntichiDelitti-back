@@ -1,6 +1,7 @@
 package com.example.antichidelitti.tema;
 
 import com.example.antichidelitti.articolo.Articolo;
+import com.example.antichidelitti.bozza.Bozza;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,4 +19,6 @@ public class Tema {
 private String thema;
 @ManyToMany(mappedBy = "temaList")
 private List<Articolo> article;
+    @ManyToMany(mappedBy = "temaList")
+    private List<Bozza> bozza;
 }

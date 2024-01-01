@@ -1,6 +1,7 @@
 package com.example.antichidelitti.categoria;
 
 import com.example.antichidelitti.articolo.Articolo;
+import com.example.antichidelitti.bozza.Bozza;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,4 +19,6 @@ public class Categoria {
     private String category;
     @ManyToMany(mappedBy = "categoriaList")
     private List<Articolo> article;
+    @ManyToMany(mappedBy = "categoriaList")
+    private List<Bozza> bozza;
 }
