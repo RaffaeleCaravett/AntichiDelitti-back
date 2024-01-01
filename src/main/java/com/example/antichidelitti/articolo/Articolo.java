@@ -22,10 +22,14 @@ public class Articolo {
     private String testo;
     private List<String> images;
     @ManyToMany
-    @JoinTable(name = "articole_category")
+    @JoinTable(name = "article_category",
+            joinColumns = @JoinColumn(name = "articole_id"),
+            inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private List<Categoria> categoriaList;
     @ManyToMany
-    @JoinTable(name = "articole_themas")
+    @JoinTable(name = "articole_themas",
+            joinColumns = @JoinColumn(name = "articole_id"),
+            inverseJoinColumns = @JoinColumn(name = "tema_id"))
     private List<Tema> temaList;
     @ManyToOne
     @JoinColumn(name = "luogo_id")
