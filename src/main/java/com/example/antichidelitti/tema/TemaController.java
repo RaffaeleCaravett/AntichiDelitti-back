@@ -25,11 +25,13 @@ public class TemaController {
     }
 
     @PostMapping("")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void save(TagDTO body){
         temaService.save();
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Tema findByIdAndUpdate(@PathVariable int id, @RequestBody TemaDTO body) throws NotFoundException {
         return temaService.findByIdAndUpdate(id, body);
     }

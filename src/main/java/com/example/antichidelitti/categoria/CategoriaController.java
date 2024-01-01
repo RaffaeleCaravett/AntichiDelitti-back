@@ -23,11 +23,13 @@ public class CategoriaController {
     }
 
     @PostMapping("")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void save(CategoryDTO body){
         categoriaService.save();
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Categoria findByIdAndUpdate(@PathVariable int id, @RequestBody CategoryDTO body) throws NotFoundException {
         return categoriaService.findByIdAndUpdate(id, body);
     }
