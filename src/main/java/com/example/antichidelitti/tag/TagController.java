@@ -1,11 +1,11 @@
-package com.example.antichidelitti.tema;
+package com.example.antichidelitti.tag;
+
 
 import com.example.antichidelitti.exception.NotFoundException;
 import com.example.antichidelitti.payloads.entities.TagDTO;
 import com.example.antichidelitti.payloads.entities.TemaDTO;
-import com.example.antichidelitti.payloads.entities.UserRegistrationDTO;
-import com.example.antichidelitti.user.User;
-import com.example.antichidelitti.visita.Visita;
+import com.example.antichidelitti.tema.Tema;
+import com.example.antichidelitti.tema.TemaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,30 +14,29 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tema")
-public class TemaController {
-
+@RequestMapping("/tag")
+public class TagController {
     @Autowired
-    TemaService temaService;
+    TagService tagService;
     @GetMapping("")
-    public List<Tema> findAll(){
-        return temaService.getAll();
+    public List<Tag> findAll(){
+        return tagService.getAll();
     }
 
     @PostMapping("")
     public void save(TagDTO body){
-        temaService.save();
+        tagService.save();
     }
 
     @PutMapping("/{id}")
-    public Tema findByIdAndUpdate(@PathVariable int id, @RequestBody TemaDTO body) throws NotFoundException {
-        return temaService.findByIdAndUpdate(id, body);
+    public Tag findByIdAndUpdate(@PathVariable int id, @RequestBody TagDTO body) throws NotFoundException {
+        return tagService.findByIdAndUpdate(id, body);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT) // <-- 204 NO CONTENT
     public void findByIdAndDelete(@PathVariable int id) throws NotFoundException {
-        temaService.findByIdAndDelete(id);
+        tagService.findByIdAndDelete(id);
     }
 }
