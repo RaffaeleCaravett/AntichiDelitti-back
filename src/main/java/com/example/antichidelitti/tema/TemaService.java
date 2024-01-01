@@ -14,8 +14,9 @@ import java.util.List;
 public class TemaService {
     @Autowired
    TemaRepository temaRepository;
-    public void save(){
+    public void save(TemaDTO body){
         Tema tema = new Tema();
+        tema.setThema(body.thema());
         temaRepository.save(tema);
     }
 

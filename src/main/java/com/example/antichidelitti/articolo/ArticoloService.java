@@ -1,10 +1,10 @@
-package com.example.antichidelitti.bozza;
+package com.example.antichidelitti.articolo;
 
 import com.example.antichidelitti.categoria.Categoria;
 import com.example.antichidelitti.categoria.CategoriaRepository;
 import com.example.antichidelitti.exception.NotFoundException;
 import com.example.antichidelitti.luogo.LuogoRepository;
-import com.example.antichidelitti.payloads.entities.BozzaDTO;
+import com.example.antichidelitti.payloads.entities.ArticoloDTO;
 import com.example.antichidelitti.payloads.entities.TagDTO;
 import com.example.antichidelitti.tag.Tag;
 import com.example.antichidelitti.tag.TagRepository;
@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class BozzaService {
+public class ArticoloService {
     @Autowired
-    BozzaRepository bozzaRepository;
+    ArticoloRepository articoloRepository;
     @Autowired
     TagRepository tagRepository;
     @Autowired
@@ -29,8 +29,8 @@ public class BozzaService {
     CategoriaRepository categoriaRepository;
     @Autowired
     LuogoRepository luogoRepository;
-    public void save(BozzaDTO body){
-        Bozza found = new Bozza();
+    public void save(ArticoloDTO body){
+        Articolo found = new Articolo();
         found.setTesto(body.testo());
         found.setTitolo(body.titolo());
         List<Tag> tagList = new ArrayList<>();
@@ -54,18 +54,18 @@ public class BozzaService {
         found.setTemaList(temaList);
         found.setImages(imageList);
         found.setCreated_at(LocalDate.now());
-        bozzaRepository.save(found);
+        articoloRepository.save(found);
     }
 
-    public Bozza findById(long id) throws NotFoundException {
-        return bozzaRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
+    public Articolo findById(long id) throws NotFoundException {
+        return articoloRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
-    public List<Bozza> getAll(){
-        return bozzaRepository.findAll();
+    public List<Articolo> getAll(){
+        return articoloRepository.findAll();
     }
 
-    public Bozza findByIdAndUpdate(long id, BozzaDTO body) throws NotFoundException {
-        Bozza found = bozzaRepository.findById(id).get();
+    public Articolo findByIdAndUpdate(long id, ArticoloDTO body) throws NotFoundException {
+        Articolo found = articoloRepository.findById(id).get();
         found.setTesto(body.testo());
         found.setTitolo(body.titolo());
         List<Tag> tagList = new ArrayList<>();
@@ -87,13 +87,12 @@ public class BozzaService {
         found.setTemaList(temaList);
         List<String> imageList = new ArrayList<>(body.imageList());
         found.setTemaList(temaList);
-found.setImages(imageList);
-
-        return bozzaRepository.save(found);
+        found.setImages(imageList);
+        return articoloRepository.save(found);
     }
 
     public void findByIdAndDelete(long id) throws NotFoundException {
-        Bozza found = this.findById(id);
-        bozzaRepository.delete(found);
+        Articolo found = this.findById(id);
+        articoloRepository.delete(found);
     }
 }

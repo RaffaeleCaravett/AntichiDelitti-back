@@ -26,8 +26,8 @@ public class TemaController {
 
     @PostMapping("")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void save(TagDTO body){
-        temaService.save();
+    public void save(TemaDTO body){
+        temaService.save(body);
     }
 
     @PutMapping("/{id}")

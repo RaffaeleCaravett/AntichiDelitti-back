@@ -21,7 +21,7 @@ public class VisitController {
     }
 
     @PostMapping("")
-    public void save(Object body){
+    public void save(){
         visitService.save();
     }
 }

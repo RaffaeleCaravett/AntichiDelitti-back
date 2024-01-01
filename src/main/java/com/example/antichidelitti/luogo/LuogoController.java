@@ -1,7 +1,7 @@
-package com.example.antichidelitti.categoria;
+package com.example.antichidelitti.luogo;
 
 import com.example.antichidelitti.exception.NotFoundException;
-import com.example.antichidelitti.payloads.entities.CategoryDTO;
+import com.example.antichidelitti.payloads.entities.LuogoDTO;
 import com.example.antichidelitti.payloads.entities.TagDTO;
 import com.example.antichidelitti.tag.Tag;
 import com.example.antichidelitti.tag.TagService;
@@ -13,31 +13,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categoria")
-public class CategoriaController {
+@RequestMapping("/luogo")
+public class LuogoController {
     @Autowired
-    CategoriaService categoriaService;
+    LuogoService luogoService;
     @GetMapping("")
-    public List<Categoria> findAll(){
-        return categoriaService.getAll();
+    public List<Luogo> findAll(){
+        return luogoService.getAll();
     }
 
     @PostMapping("")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void save(CategoryDTO body){
-        categoriaService.save(body);
+    public void save(LuogoDTO body){
+        luogoService.save(body);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Categoria findByIdAndUpdate(@PathVariable int id, @RequestBody CategoryDTO body) throws NotFoundException {
-        return categoriaService.findByIdAndUpdate(id, body);
+    public Luogo findByIdAndUpdate(@PathVariable int id, @RequestBody LuogoDTO body) throws NotFoundException {
+        return luogoService.findByIdAndUpdate(id, body);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT) // <-- 204 NO CONTENT
     public void findByIdAndDelete(@PathVariable int id) throws NotFoundException {
-        categoriaService.findByIdAndDelete(id);
+        luogoService.findByIdAndDelete(id);
     }
 }

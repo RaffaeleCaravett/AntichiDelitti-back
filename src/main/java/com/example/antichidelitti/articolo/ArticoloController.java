@@ -1,6 +1,9 @@
-package com.example.antichidelitti.bozza;
+package com.example.antichidelitti.articolo;
 
+import com.example.antichidelitti.bozza.Bozza;
+import com.example.antichidelitti.bozza.BozzaService;
 import com.example.antichidelitti.exception.NotFoundException;
+import com.example.antichidelitti.payloads.entities.ArticoloDTO;
 import com.example.antichidelitti.payloads.entities.BozzaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,33 +13,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/bozza")
-public class BozzaController {
+@RequestMapping("/articolo")
+public class ArticoloController {
     @Autowired
-    BozzaService bozzaService;
+    ArticoloService articoloService;
     @GetMapping("")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Bozza> findAll(){
-        return bozzaService.getAll();
+    public List<Articolo> findAll(){
+        return articoloService.getAll();
     }
 
     @PostMapping("")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void save(BozzaDTO body){
-        bozzaService.save(body);
+    public void save(ArticoloDTO body){
+        articoloService.save(body);
     }
 
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Bozza findByIdAndUpdate(@PathVariable int id, @RequestBody BozzaDTO body) throws NotFoundException {
-        return bozzaService.findByIdAndUpdate(id, body);
+    public Articolo findByIdAndUpdate(@PathVariable int id, @RequestBody ArticoloDTO body) throws NotFoundException {
+        return articoloService.findByIdAndUpdate(id, body);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT) // <-- 204 NO CONTENT
     public void findByIdAndDelete(@PathVariable int id) throws NotFoundException {
-        bozzaService.findByIdAndDelete(id);
+        articoloService.findByIdAndDelete(id);
     }
 }

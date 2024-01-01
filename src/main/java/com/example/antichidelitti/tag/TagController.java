@@ -26,7 +26,7 @@ public class TagController {
     @PostMapping("")
     @PreAuthorize("hasAuthority('ADMIN')")
     public void save(TagDTO body){
-        tagService.save();
+        tagService.save(body);
     }
 
     @PutMapping("/{id}")

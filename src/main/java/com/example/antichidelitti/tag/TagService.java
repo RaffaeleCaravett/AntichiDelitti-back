@@ -11,8 +11,9 @@ import java.util.List;
 public class TagService {
     @Autowired
     TagRepository tagRepository;
-    public void save(){
+    public void save(TagDTO body){
         Tag tag = new Tag();
+        tag.setTag(body.tag());
         tagRepository.save(tag);
     }
 

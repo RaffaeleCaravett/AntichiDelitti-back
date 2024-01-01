@@ -14,8 +14,9 @@ import java.util.List;
 public class CategoriaService {
     @Autowired
     CategoriaRepository tagRepository;
-    public void save(){
+    public void save(CategoryDTO categoryDTO){
         Categoria categoria = new Categoria();
+        categoria.setCategory(categoryDTO.category());
         tagRepository.save(categoria);
     }
 
