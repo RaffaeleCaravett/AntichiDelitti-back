@@ -1,30 +1,20 @@
 package com.example.antichidelitti.auth;
 
-import com.example.unbreackable.continent.ContinentRepository;
-import com.example.unbreackable.email.EmailService;
-import com.example.unbreackable.enums.UserRoles;
-import com.example.unbreackable.exception.BadRequestException;
-import com.example.unbreackable.exception.UnauthorizedException;
-import com.example.unbreackable.nations.NationRepository;
-import com.example.unbreackable.payloads.entities.Token;
-import com.example.unbreackable.payloads.entities.UserLoginDTO;
-import com.example.unbreackable.payloads.entities.UserRegistrationDTO;
-import com.example.unbreackable.security.JWTTools;
-import com.example.unbreackable.user.User;
-import com.example.unbreackable.user.UserRepository;
-import com.example.unbreackable.user.UserService;
+
+import com.example.antichidelitti.exception.BadRequestException;
+import com.example.antichidelitti.exception.UnauthorizedException;
+import com.example.antichidelitti.payloads.entities.Token;
+import com.example.antichidelitti.payloads.entities.UserLoginDTO;
+import com.example.antichidelitti.payloads.entities.UserRegistrationDTO;
+import com.example.antichidelitti.security.JWTTools;
+import com.example.antichidelitti.user.User;
+import com.example.antichidelitti.user.UserRepository;
+import com.example.antichidelitti.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class AuthService {
@@ -40,14 +30,6 @@ public class AuthService {
     @Autowired
     private PasswordEncoder bcrypt;
 
-    @Autowired
-    private EmailService emailService;
-
-    @Autowired
-    private ContinentRepository cityRepository;
-
-    @Autowired
-    private NationRepository nationRepository;
 
     public Token authenticateUser(UserLoginDTO body) throws Exception {
         // 1. Verifichiamo che l'email dell'utente sia nel db
@@ -74,28 +56,12 @@ public class AuthService {
         newUser.setEmail(body.email());
         newUser.setNome(body.nome());
         newUser.setCognome(body.cognome());
-        newUser.setEtà(body.età());
-        newUser.setContinent(cityRepository.findById(body.continente()).get());
-        newUser.setNazione(nationRepository.findById(body.nazione()).get());
         newUser.setRole(UserRoles.USER);
         userRepository.save(newUser);
 
-
-        String to = body.email();
-        String subject = "Email di benvenuto";
-        String text = "Complimenti! Registrazione su unbreakable avvenuta con successo!";
-
-        emailService.sendEmail(to, subject, text);
-
         return newUser;
     }
-    public Page<User> getUtenti(int page, int size, String orderBy) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
 
-        return userRepository.findAll(pageable);
-    }
 
-    public Page<User> findByDynamicParams(String nome, String cognome, String nazione, String continent, String email, int eta, Pageable pageable) {
-        return userRepository.findByDynamicParams(nome, cognome, nazione, continent, email, eta, pageable);
-    }
+
 }

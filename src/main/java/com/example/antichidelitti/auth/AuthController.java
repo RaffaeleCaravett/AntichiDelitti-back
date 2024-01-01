@@ -1,15 +1,12 @@
 package com.example.antichidelitti.auth;
 
-import com.example.unbreackable.exception.BadRequestException;
-import com.example.unbreackable.payloads.entities.Token;
-import com.example.unbreackable.payloads.entities.UserLoginDTO;
-import com.example.unbreackable.payloads.entities.UserLoginSuccessDTO;
-import com.example.unbreackable.payloads.entities.UserRegistrationDTO;
-import com.example.unbreackable.rating.Rating;
-import com.example.unbreackable.rating.RatingService;
-import com.example.unbreackable.security.JWTTools;
-import com.example.unbreackable.user.User;
-import com.example.unbreackable.user.UserService;
+import com.example.antichidelitti.exception.BadRequestException;
+import com.example.antichidelitti.payloads.entities.Token;
+import com.example.antichidelitti.payloads.entities.UserLoginDTO;
+import com.example.antichidelitti.payloads.entities.UserLoginSuccessDTO;
+import com.example.antichidelitti.payloads.entities.UserRegistrationDTO;
+import com.example.antichidelitti.security.JWTTools;
+import com.example.antichidelitti.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
@@ -28,13 +25,12 @@ public class AuthController {
     private AuthService authService;
 
     @Autowired
-    privavte JWTTools jwtTools;
+    private JWTTools jwtTools;
 
     @Autowired
     private UserService utenteService;
 
-    @Autowired
-    private RatingService ratingService;
+
 
     @PostMapping("/login")
     public UserLoginSuccessDTO login(@RequestBody UserLoginDTO body) throws Exception {
@@ -81,33 +77,4 @@ public class AuthController {
 
 
 
-    @GetMapping("/user")
-    public Page<User> getUser(@RequestParam(defaultValue = "0") int page,
-                              @RequestParam(defaultValue = "10") int size,
-                              @RequestParam(defaultValue = "id") String orderBy){
-        return authService.getUtenti(page, size, orderBy);
-    }
-    @GetMapping("/rating")
-    public Page<Rating> getRatings(@RequestParam(defaultValue = "0") int page,
-                                   @RequestParam(defaultValue = "10") int size,
-                                   @RequestParam(defaultValue = "id") String orderBy){
-        return ratingService.getRatings(page, size, orderBy);
-    }
-    @GetMapping("/search")
-    public Page<User> searchByParams(@RequestParam(required = false) String nome,
-                                     @RequestParam(required = false) String cognome,
-                                     @RequestParam(required = false) String nazione,
-                                     @RequestParam(required = false) String continent,
-                                     @RequestParam(required = false) String email,
-                                     @RequestParam(required = false) int eta,
-                                     @RequestParam(defaultValue = "ASC") String direction,
-                                     @RequestParam(defaultValue = "id") String sort,
-                                     Pageable pageable) {
-
-        Sort.Direction sortDirection = Sort.Direction.fromString(direction);
-        Pageable modifiedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sortDirection, sort);
-
-        Page<User> result = authService.findByDynamicParams(nome, cognome, nazione, continent, email, eta, modifiedPageable);
-        return result;
-    }
 }

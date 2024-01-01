@@ -1,9 +1,10 @@
 package com.example.antichidelitti.security;
 
-import com.example.unbreackable.exception.UnauthorizedException;
-import com.example.unbreackable.payloads.entities.Token;
-import com.example.unbreackable.user.User;
-import com.example.unbreackable.user.UserRepository;
+
+import com.example.antichidelitti.exception.UnauthorizedException;
+import com.example.antichidelitti.payloads.entities.Token;
+import com.example.antichidelitti.user.User;
+import com.example.antichidelitti.user.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -20,7 +21,8 @@ public class JWTTools {
     @Value("${spring.jwt.secret}")
     private String secret;
 
-    @Autowired UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
     public Token createToken(User user){
 
         String accessToken=Jwts.builder().setSubject(String.valueOf(user.getId()))// Subject <-- A chi appartiene il token
