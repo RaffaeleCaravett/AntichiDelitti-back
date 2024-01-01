@@ -2,6 +2,7 @@ package com.example.antichidelitti.articolo;
 
 import com.example.antichidelitti.categoria.Categoria;
 import com.example.antichidelitti.luogo.Luogo;
+import com.example.antichidelitti.personaggio.Personaggio;
 import com.example.antichidelitti.tag.Tag;
 import com.example.antichidelitti.tema.Tema;
 import jakarta.persistence.*;
@@ -37,6 +38,11 @@ public class Articolo {
             joinColumns = @JoinColumn(name = "articole_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private List<Tag> tagList;
+    @ManyToMany
+    @JoinTable(name = "article_character",
+            joinColumns = @JoinColumn(name = "articole_id"),
+            inverseJoinColumns = @JoinColumn(name = "character_id"))
+    private List<Personaggio> personaggioList;
     @ManyToOne
     @JoinColumn(name = "luogo_id")
     private Luogo luogo;
