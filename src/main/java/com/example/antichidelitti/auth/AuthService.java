@@ -1,6 +1,7 @@
 package com.example.antichidelitti.auth;
 
 
+import com.example.antichidelitti.enums.Role;
 import com.example.antichidelitti.exception.BadRequestException;
 import com.example.antichidelitti.exception.UnauthorizedException;
 import com.example.antichidelitti.payloads.entities.Token;
@@ -54,9 +55,9 @@ public class AuthService {
         User newUser = new User();
         newUser.setPassword(bcrypt.encode(body.password()));
         newUser.setEmail(body.email());
-        newUser.setNome(body.nome());
-        newUser.setCognome(body.cognome());
-        newUser.setRole(UserRoles.USER);
+        newUser.setName(body.nome());
+        newUser.setSurname(body.cognome());
+        newUser.setRole(Role.USER);
         userRepository.save(newUser);
 
         return newUser;

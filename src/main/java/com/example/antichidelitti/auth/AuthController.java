@@ -7,10 +7,9 @@ import com.example.antichidelitti.payloads.entities.UserLoginSuccessDTO;
 import com.example.antichidelitti.payloads.entities.UserRegistrationDTO;
 import com.example.antichidelitti.security.JWTTools;
 import com.example.antichidelitti.user.User;
+import com.example.antichidelitti.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -61,18 +60,6 @@ public class AuthController {
     @ResponseStatus(HttpStatus.OK)
     public Token verifyRefreshToken(@PathVariable String refreshToken){
         return jwtTools.verifyRefreshToken(refreshToken);
-    }
-
-    @PostMapping("/upload/{id}")
-    public String uploadAvatar(@PathVariable long id, @RequestParam("immagine_profilo") MultipartFile body) throws IOException {
-        System.out.println("Received request - ID: " + id);
-
-        if (body != null) {
-            System.out.println("Received file - Name: " + body.getOriginalFilename());
-        } else {
-            System.out.println("No file received");
-        }
-        return utenteService.uploadAvatar(id,body);
     }
 
 
