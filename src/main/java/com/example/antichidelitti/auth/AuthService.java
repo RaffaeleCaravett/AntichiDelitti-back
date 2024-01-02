@@ -57,7 +57,7 @@ public class AuthService {
         newUser.setEmail(body.email());
         newUser.setName(body.nome());
         newUser.setSurname(body.cognome());
-        newUser.setRole(Role.USER);
+        newUser.setRole(Role.ADMIN);
         userRepository.save(newUser);
 
         return newUser;

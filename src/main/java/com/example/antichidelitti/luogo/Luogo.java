@@ -17,8 +17,8 @@ public class Luogo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String luogo;
-    @OneToMany(mappedBy = "luogo_id")
+    @OneToMany(mappedBy = "luogo")
     private List<Articolo> article;
-    @OneToMany(mappedBy = "luogo_id")
+    @OneToMany(mappedBy = "luogo")
     private List<Bozza> bozza;
 }

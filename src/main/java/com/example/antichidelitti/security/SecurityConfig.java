@@ -1,6 +1,6 @@
 package com.example.antichidelitti.security;
 
-import com.example.unbreackable.exception.ExceptionsHandlerFilter;
+import com.example.antichidelitti.exception.ExceptionsHandlerFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

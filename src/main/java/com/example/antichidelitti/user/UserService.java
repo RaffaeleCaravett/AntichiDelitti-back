@@ -1,5 +1,7 @@
 package com.example.antichidelitti.user;
 
+import com.cloudinary.provisioning.Account;
+import com.example.antichidelitti.enums.Role;
 import com.example.antichidelitti.exception.NotFoundException;
 import com.example.antichidelitti.payloads.entities.UserRegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,6 @@ public class UserService {
         found.setSurname(body.cognome());
         found.setName(body.nome());
         found.setEmail(body.email());
-        //found.setPassword(bcrypt.encode(body.getPassword()));
         return utenteRepository.save(found);
     }
 
