@@ -1,13 +1,17 @@
 package com.example.antichidelitti.categoria;
 
+import com.example.antichidelitti.exception.BadRequestException;
 import com.example.antichidelitti.exception.NotFoundException;
 import com.example.antichidelitti.payloads.entities.CategoryDTO;
 import com.example.antichidelitti.payloads.entities.TagDTO;
+import com.example.antichidelitti.payloads.entities.TemaDTO;
 import com.example.antichidelitti.tag.Tag;
 import com.example.antichidelitti.tag.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +28,12 @@ public class CategoriaController {
 
     @PostMapping("")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void save(CategoryDTO body){
-        categoriaService.save(body);
+    public void save(@RequestBody @Validated CategoryDTO body, BindingResult validation){
+        if(validation.hasErrors()){
+            throw new BadRequestException(validation.getAllErrors());
+        } else {
+            categoriaService.save(body);
+        }
     }
 
     @PutMapping("/{id}")
