@@ -50,7 +50,7 @@ public class PersonaggioController {
     public void findByIdAndDelete(@PathVariable int id) throws NotFoundException {
         personaggioService.findByIdAndDelete(id);
     }
-    @GetMapping("/alias")
+    @GetMapping("/{alias}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<Personaggio> findByAliasContainsIgnoreCase(@PathVariable String alias){
         return personaggioService.findByAliasContainsIgnoreCase(alias);

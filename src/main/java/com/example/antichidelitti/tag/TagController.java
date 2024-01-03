@@ -53,7 +53,7 @@ public class TagController {
     public void findByIdAndDelete(@PathVariable int id) throws NotFoundException {
         tagService.findByIdAndDelete(id);
     }
-    @GetMapping("/tag")
+    @GetMapping("/{tag}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<Tag> findBTagContainsIgnoreCase(@PathVariable String tag){
         return tagService.findByTagContainsIgnoreCase(tag);

@@ -55,7 +55,7 @@ public class TemaController {
     public void findByIdAndDelete(@PathVariable int id) throws NotFoundException {
         temaService.findByIdAndDelete(id);
     }
-    @GetMapping("/thema")
+    @GetMapping("/{thema}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<Tema> findBThemaContainsIgnoreCase(@PathVariable String thema){
         return temaService.findByThemaContainsIgnoreCase(thema);

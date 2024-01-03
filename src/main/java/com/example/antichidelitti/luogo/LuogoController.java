@@ -52,7 +52,7 @@ public class LuogoController {
     public void findByIdAndDelete(@PathVariable int id) throws NotFoundException {
         luogoService.findByIdAndDelete(id);
     }
-    @GetMapping("/luogo")
+    @GetMapping("/{luogo}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<Luogo> findBLuogoContainsIgnoreCase(@PathVariable String luogo){
         return luogoService.findByLuogoContainsIgnoreCase(luogo);

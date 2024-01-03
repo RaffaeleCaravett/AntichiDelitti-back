@@ -52,7 +52,7 @@ public class CategoriaController {
     public void findByIdAndDelete(@PathVariable int id) throws NotFoundException {
         categoriaService.findByIdAndDelete(id);
     }
-    @GetMapping("/category")
+    @GetMapping("/{category}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<Categoria> findByCategoryContainsIgnoreCase(@PathVariable String category){
        return categoriaService.findByCategoryContainsIgnoreCase(category);
