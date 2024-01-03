@@ -1,6 +1,7 @@
 package com.example.antichidelitti.tag;
 
 
+import com.example.antichidelitti.categoria.Categoria;
 import com.example.antichidelitti.exception.BadRequestException;
 import com.example.antichidelitti.exception.NotFoundException;
 import com.example.antichidelitti.payloads.entities.TagDTO;
@@ -21,6 +22,8 @@ import java.util.List;
 public class TagController {
     @Autowired
     TagService tagService;
+    @Autowired
+    TagRepository tagRepository;
     @GetMapping("")
     public List<Tag> findAll(){
         return tagService.getAll();
@@ -31,7 +34,9 @@ public class TagController {
     public void save(@RequestBody @Validated TagDTO body, BindingResult validation){
         if(validation.hasErrors()){
             throw new BadRequestException(validation.getAllErrors());
-        } else {
+        }else if(tagRepository.findByTag(body.tag())!=null){
+            throw new BadRequestException("Tag già presente");
+        }else {
             tagService.save(body);
         }
     }
@@ -47,5 +52,10 @@ public class TagController {
     @ResponseStatus(HttpStatus.NO_CONTENT) // <-- 204 NO CONTENT
     public void findByIdAndDelete(@PathVariable int id) throws NotFoundException {
         tagService.findByIdAndDelete(id);
+    }
+    @GetMapping("/tag")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<Tag> findBTagContainsIgnoreCase(@PathVariable String tag){
+        return tagService.findByTagContainsIgnoreCase(tag);
     }
 }

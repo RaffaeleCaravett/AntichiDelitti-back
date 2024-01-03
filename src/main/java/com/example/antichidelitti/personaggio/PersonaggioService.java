@@ -1,6 +1,7 @@
 package com.example.antichidelitti.personaggio;
 
 import com.example.antichidelitti.exception.NotFoundException;
+import com.example.antichidelitti.luogo.Luogo;
 import com.example.antichidelitti.payloads.entities.TagDTO;
 import com.example.antichidelitti.tag.Tag;
 import com.example.antichidelitti.tag.TagRepository;
@@ -40,5 +41,8 @@ public class PersonaggioService {
     public void findByIdAndDelete(long id) throws NotFoundException {
         Personaggio found = this.findById(id);
         personaggioRepository.delete(found);
+    }
+    public List<Personaggio> findByAliasContainsIgnoreCase(String alias) throws NotFoundException {
+        return personaggioRepository.findByAliasContainsIgnoreCase(alias);
     }
 }

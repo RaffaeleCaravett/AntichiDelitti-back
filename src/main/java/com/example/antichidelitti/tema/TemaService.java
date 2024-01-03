@@ -1,6 +1,7 @@
 package com.example.antichidelitti.tema;
 
 import com.example.antichidelitti.exception.NotFoundException;
+import com.example.antichidelitti.luogo.Luogo;
 import com.example.antichidelitti.payloads.entities.TemaDTO;
 import com.example.antichidelitti.payloads.entities.UserRegistrationDTO;
 import com.example.antichidelitti.user.User;
@@ -37,5 +38,8 @@ public class TemaService {
     public void findByIdAndDelete(long id) throws NotFoundException {
         Tema found = this.findById(id);
         temaRepository.delete(found);
+    }
+    public List<Tema> findByThemaContainsIgnoreCase(String thema) throws NotFoundException {
+        return temaRepository.findByThemaContainsIgnoreCase(thema);
     }
 }

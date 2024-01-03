@@ -21,6 +21,8 @@ import java.util.List;
 public class CategoriaController {
     @Autowired
     CategoriaService categoriaService;
+    @Autowired
+    CategoriaRepository categoriaRepository;
     @GetMapping("")
     public List<Categoria> findAll(){
         return categoriaService.getAll();
@@ -31,7 +33,9 @@ public class CategoriaController {
     public void save(@RequestBody @Validated CategoryDTO body, BindingResult validation){
         if(validation.hasErrors()){
             throw new BadRequestException(validation.getAllErrors());
-        } else {
+        }else if (categoriaRepository.findByCategory(body.category())!=null){
+            throw new BadRequestException("categoria già presente");
+        }else {
             categoriaService.save(body);
         }
     }
@@ -47,5 +51,10 @@ public class CategoriaController {
     @ResponseStatus(HttpStatus.NO_CONTENT) // <-- 204 NO CONTENT
     public void findByIdAndDelete(@PathVariable int id) throws NotFoundException {
         categoriaService.findByIdAndDelete(id);
+    }
+    @GetMapping("/category")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<Categoria> findByCategoryContainsIgnoreCase(@PathVariable String category){
+       return categoriaService.findByCategoryContainsIgnoreCase(category);
     }
 }

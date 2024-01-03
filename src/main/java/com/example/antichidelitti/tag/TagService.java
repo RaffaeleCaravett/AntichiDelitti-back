@@ -1,6 +1,7 @@
 package com.example.antichidelitti.tag;
 
 import com.example.antichidelitti.exception.NotFoundException;
+import com.example.antichidelitti.luogo.Luogo;
 import com.example.antichidelitti.payloads.entities.TagDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,5 +35,8 @@ public class TagService {
     public void findByIdAndDelete(long id) throws NotFoundException {
         Tag found = this.findById(id);
         tagRepository.delete(found);
+    }
+    public List<Tag> findByTagContainsIgnoreCase(String tag) throws NotFoundException {
+        return tagRepository.findByTagContainsIgnoreCase(tag);
     }
 }

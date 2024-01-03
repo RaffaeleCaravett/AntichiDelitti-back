@@ -21,6 +21,8 @@ import java.util.List;
 public class LuogoController {
     @Autowired
     LuogoService luogoService;
+    @Autowired
+    LuogoRepository luogoRepository;
     @GetMapping("")
     public List<Luogo> findAll(){
         return luogoService.getAll();
@@ -31,7 +33,9 @@ public class LuogoController {
     public void save(@RequestBody @Validated LuogoDTO body, BindingResult validation){
         if(validation.hasErrors()){
             throw new BadRequestException(validation.getAllErrors());
-        } else {
+        }else if(luogoRepository.findByLuogo(body.luogo())!=null){
+            throw new BadRequestException("Luogo già presente");
+        }else {
             luogoService.save(body);
         }
     }
@@ -47,5 +51,10 @@ public class LuogoController {
     @ResponseStatus(HttpStatus.NO_CONTENT) // <-- 204 NO CONTENT
     public void findByIdAndDelete(@PathVariable int id) throws NotFoundException {
         luogoService.findByIdAndDelete(id);
+    }
+    @GetMapping("/luogo")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<Luogo> findBLuogoContainsIgnoreCase(@PathVariable String luogo){
+        return luogoService.findByLuogoContainsIgnoreCase(luogo);
     }
 }

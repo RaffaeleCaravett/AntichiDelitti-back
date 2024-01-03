@@ -13,29 +13,33 @@ import java.util.List;
 @Service
 public class CategoriaService {
     @Autowired
-    CategoriaRepository tagRepository;
+    CategoriaRepository categoriaRepository;
     public void save(CategoryDTO categoryDTO){
         Categoria categoria = new Categoria();
         categoria.setCategory(categoryDTO.category());
-        tagRepository.save(categoria);
+        categoriaRepository.save(categoria);
     }
 
     public Categoria findById(long id) throws NotFoundException {
-        return tagRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
+        return categoriaRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
     public List<Categoria> getAll(){
-        return tagRepository.findAll();
+        return categoriaRepository.findAll();
     }
 
     public Categoria findByIdAndUpdate(long id, CategoryDTO body) throws NotFoundException {
-        Categoria found = tagRepository.findById(id).get();
+        Categoria found = categoriaRepository.findById(id).get();
         found.setCategory(body.category());
         //found.setPassword(bcrypt.encode(body.getPassword()));
-        return tagRepository.save(found);
+        return categoriaRepository.save(found);
     }
 
     public void findByIdAndDelete(long id) throws NotFoundException {
         Categoria found = this.findById(id);
-        tagRepository.delete(found);
+        categoriaRepository.delete(found);
+    }
+
+    public List<Categoria> findByCategoryContainsIgnoreCase(String category) throws NotFoundException {
+        return categoriaRepository.findByCategoryContainsIgnoreCase(category);
     }
 }

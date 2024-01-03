@@ -19,6 +19,8 @@ import java.util.List;
 public class PersonaggioController {
     @Autowired
     PersonaggioService personaggioService;
+    @Autowired
+    PersonaggioRepository personaggioRepository;
     @GetMapping("")
     public List<Personaggio> findAll(){
         return personaggioService.getAll();
@@ -29,7 +31,9 @@ public class PersonaggioController {
     public void save(@RequestBody @Validated Personaggio body, BindingResult validation){
         if(validation.hasErrors()){
             throw new BadRequestException(validation.getAllErrors());
-        } else {
+        }else if(personaggioRepository.findByAlias(body.getAlias())!=null){
+            throw new BadRequestException("Personaggio già presente");
+        }else {
             personaggioService.save(body);
         }
     }
@@ -45,5 +49,10 @@ public class PersonaggioController {
     @ResponseStatus(HttpStatus.NO_CONTENT) // <-- 204 NO CONTENT
     public void findByIdAndDelete(@PathVariable int id) throws NotFoundException {
         personaggioService.findByIdAndDelete(id);
+    }
+    @GetMapping("/alias")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<Personaggio> findByAliasContainsIgnoreCase(@PathVariable String alias){
+        return personaggioService.findByAliasContainsIgnoreCase(alias);
     }
 }

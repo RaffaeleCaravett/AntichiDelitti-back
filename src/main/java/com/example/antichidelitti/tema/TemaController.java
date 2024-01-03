@@ -1,5 +1,6 @@
 package com.example.antichidelitti.tema;
 
+import com.example.antichidelitti.categoria.Categoria;
 import com.example.antichidelitti.exception.BadRequestException;
 import com.example.antichidelitti.exception.NotFoundException;
 import com.example.antichidelitti.payloads.entities.TagDTO;
@@ -23,6 +24,8 @@ public class TemaController {
 
     @Autowired
     TemaService temaService;
+    @Autowired
+    TemaRepository temaRepository;
     @GetMapping("")
     public List<Tema> findAll(){
         return temaService.getAll();
@@ -33,7 +36,9 @@ public class TemaController {
     public void save(@RequestBody @Validated TemaDTO body, BindingResult validation){
         if(validation.hasErrors()){
             throw new BadRequestException(validation.getAllErrors());
-        } else {
+        }else if(temaRepository.findByThema(body.thema())!=null){
+            throw new BadRequestException("Tema già presente");
+        }else {
             temaService.save(body);
         }
     }
@@ -49,5 +54,10 @@ public class TemaController {
     @ResponseStatus(HttpStatus.NO_CONTENT) // <-- 204 NO CONTENT
     public void findByIdAndDelete(@PathVariable int id) throws NotFoundException {
         temaService.findByIdAndDelete(id);
+    }
+    @GetMapping("/thema")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<Tema> findBThemaContainsIgnoreCase(@PathVariable String thema){
+        return temaService.findByThemaContainsIgnoreCase(thema);
     }
 }
