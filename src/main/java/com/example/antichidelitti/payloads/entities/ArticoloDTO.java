@@ -13,6 +13,8 @@ public record ArticoloDTO(
         List<Long> theme_id,
         List<Long> tag_id,
         long luogo_id,
-        List<String> imageList
-) {
+        List<String> imageList,
+        List<Long> personaggio_id
+
+        ) {
 }

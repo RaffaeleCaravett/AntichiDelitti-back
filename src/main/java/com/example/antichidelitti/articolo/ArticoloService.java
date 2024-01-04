@@ -6,6 +6,8 @@ import com.example.antichidelitti.exception.NotFoundException;
 import com.example.antichidelitti.luogo.LuogoRepository;
 import com.example.antichidelitti.payloads.entities.ArticoloDTO;
 import com.example.antichidelitti.payloads.entities.TagDTO;
+import com.example.antichidelitti.personaggio.Personaggio;
+import com.example.antichidelitti.personaggio.PersonaggioRepository;
 import com.example.antichidelitti.tag.Tag;
 import com.example.antichidelitti.tag.TagRepository;
 import com.example.antichidelitti.tema.Tema;
@@ -29,6 +31,8 @@ public class ArticoloService {
     CategoriaRepository categoriaRepository;
     @Autowired
     LuogoRepository luogoRepository;
+    @Autowired
+    PersonaggioRepository personaggioRepository;
     public void save(ArticoloDTO body){
         Articolo found = new Articolo();
         found.setTesto(body.testo());
@@ -36,6 +40,7 @@ public class ArticoloService {
         List<Tag> tagList = new ArrayList<>();
         List<Tema> temaList = new ArrayList<>();
         List<Categoria> categoriaList = new ArrayList<>();
+        List<Personaggio> personaggioList = new ArrayList<>();
 
         found.setLuogo(luogoRepository.findById(body.luogo_id()).get());
         for(Long t : body.tag_id()){
@@ -50,6 +55,10 @@ public class ArticoloService {
             temaList.add(temaRepository.findById(t).get());
         }
         found.setTemaList(temaList);
+        for(Long t : body.personaggio_id()){
+            personaggioList.add(personaggioRepository.findById(t).get());
+        }
+        found.setPersonaggioList(personaggioList);
         List<String> imageList = new ArrayList<>(body.imageList());
         found.setTemaList(temaList);
         found.setImages(imageList);
@@ -71,6 +80,7 @@ public class ArticoloService {
         List<Tag> tagList = new ArrayList<>();
         List<Tema> temaList = new ArrayList<>();
         List<Categoria> categoriaList = new ArrayList<>();
+        List<Personaggio> personaggioList = new ArrayList<>();
 
         found.setLuogo(luogoRepository.findById(body.luogo_id()).get());
         for(Long t : body.tag_id()){
@@ -85,6 +95,10 @@ public class ArticoloService {
             temaList.add(temaRepository.findById(t).get());
         }
         found.setTemaList(temaList);
+        for(Long t : body.personaggio_id()){
+            personaggioList.add(personaggioRepository.findById(t).get());
+        }
+        found.setPersonaggioList(personaggioList);
         List<String> imageList = new ArrayList<>(body.imageList());
         found.setTemaList(temaList);
         found.setImages(imageList);
