@@ -13,6 +13,7 @@ import com.example.antichidelitti.tag.TagRepository;
 import com.example.antichidelitti.tema.Tema;
 import com.example.antichidelitti.tema.TemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -82,10 +83,11 @@ public class ArticoloService {
     public Articolo findById(long id) throws NotFoundException {
         return articoloRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
-    public List<Articolo> getAll(){
-        return articoloRepository.findAll();
-    }
+    public  Page<Articolo> getAll(int page, int size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
 
+        return articoloRepository.findAll(pageable);
+    }
     public Articolo findByIdAndUpdate(long id, ArticoloDTO body) throws NotFoundException {
         Articolo found = articoloRepository.findById(id).get();
         found.setTesto(body.testo());

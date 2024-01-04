@@ -7,6 +7,7 @@ import com.example.antichidelitti.exception.NotFoundException;
 import com.example.antichidelitti.payloads.entities.ArticoloDTO;
 import com.example.antichidelitti.payloads.entities.BozzaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -22,8 +23,10 @@ public class ArticoloController {
     ArticoloService articoloService;
     @GetMapping("")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Articolo> findAll(){
-        return articoloService.getAll();
+    public Page<Articolo> getArticles(@RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "10") int size,
+                                      @RequestParam(defaultValue = "id") String orderBy){
+        return articoloService.getAll(page, size, orderBy);
     }
 
     @PostMapping("")
