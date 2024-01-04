@@ -42,21 +42,34 @@ public class ArticoloService {
         List<Categoria> categoriaList = new ArrayList<>();
         List<Personaggio> personaggioList = new ArrayList<>();
 
-        found.setLuogo(luogoRepository.findById(body.luogo_id()).get());
-        for(Long t : body.tag_id()){
-            tagList.add(tagRepository.findById(t).get());
+        if(body.luogo_id()!=0){
+            found.setLuogo(luogoRepository.findById(body.luogo_id()).get());
+        }
+
+        if(!body.tag_id().isEmpty()){
+            for(Long t : body.tag_id()){
+                tagList.add(tagRepository.findById(t).get());
+            }
         }
         found.setTagList(tagList);
-        for(Long t : body.category_id()){
-            categoriaList.add(categoriaRepository.findById(t).get());
+        if(!body.category_id().isEmpty()){
+            for(Long t : body.category_id()){
+                categoriaList.add(categoriaRepository.findById(t).get());
+            }
         }
+
         found.setCategoriaList(categoriaList);
-        for(Long t : body.theme_id()){
-            temaList.add(temaRepository.findById(t).get());
+        if(!body.theme_id().isEmpty()){
+            for(Long t : body.theme_id()){
+                temaList.add(temaRepository.findById(t).get());
+            }
         }
+
         found.setTemaList(temaList);
-        for(Long t : body.personaggio_id()){
-            personaggioList.add(personaggioRepository.findById(t).get());
+        if(!body.personaggio_id().isEmpty()) {
+            for (Long t : body.personaggio_id()) {
+                personaggioList.add(personaggioRepository.findById(t).get());
+            }
         }
         found.setPersonaggioList(personaggioList);
         List<String> imageList = new ArrayList<>(body.imageList());
@@ -81,22 +94,34 @@ public class ArticoloService {
         List<Tema> temaList = new ArrayList<>();
         List<Categoria> categoriaList = new ArrayList<>();
         List<Personaggio> personaggioList = new ArrayList<>();
+if(body.luogo_id()!=0){
+    found.setLuogo(luogoRepository.findById(body.luogo_id()).get());
+}
 
-        found.setLuogo(luogoRepository.findById(body.luogo_id()).get());
-        for(Long t : body.tag_id()){
-            tagList.add(tagRepository.findById(t).get());
-        }
-        found.setTagList(tagList);
+if(!body.tag_id().isEmpty()){
+    for(Long t : body.tag_id()){
+        tagList.add(tagRepository.findById(t).get());
+    }
+}
+            found.setTagList(tagList);
+            if(!body.category_id().isEmpty()){
         for(Long t : body.category_id()){
             categoriaList.add(categoriaRepository.findById(t).get());
         }
-        found.setCategoriaList(categoriaList);
+    }
+
+            found.setCategoriaList(categoriaList);
+            if(!body.theme_id().isEmpty()){
         for(Long t : body.theme_id()){
             temaList.add(temaRepository.findById(t).get());
         }
-        found.setTemaList(temaList);
-        for(Long t : body.personaggio_id()){
-            personaggioList.add(personaggioRepository.findById(t).get());
+    }
+
+            found.setTemaList(temaList);
+          if(!body.personaggio_id().isEmpty()) {
+            for (Long t : body.personaggio_id()) {
+                personaggioList.add(personaggioRepository.findById(t).get());
+            }
         }
         found.setPersonaggioList(personaggioList);
         List<String> imageList = new ArrayList<>(body.imageList());
