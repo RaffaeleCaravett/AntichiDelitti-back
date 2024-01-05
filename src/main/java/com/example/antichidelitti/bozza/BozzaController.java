@@ -1,12 +1,16 @@
 package com.example.antichidelitti.bozza;
 
 import com.example.antichidelitti.articolo.Articolo;
+import com.example.antichidelitti.exception.BadRequestException;
 import com.example.antichidelitti.exception.NotFoundException;
+import com.example.antichidelitti.payloads.entities.ArticoloDTO;
 import com.example.antichidelitti.payloads.entities.BozzaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +30,10 @@ public class BozzaController {
 
     @PostMapping("")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void save(BozzaDTO body){
-        bozzaService.save(body);
+    public void save(@RequestBody @Validated BozzaDTO body, BindingResult validation){
+        if(validation.hasErrors()){
+            throw new BadRequestException(validation.getAllErrors());
+        }else{bozzaService.save(body);}
     }
 
 
