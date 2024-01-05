@@ -2,6 +2,7 @@ package com.example.antichidelitti.bozza;
 
 import com.example.antichidelitti.categoria.Categoria;
 import com.example.antichidelitti.luogo.Luogo;
+import com.example.antichidelitti.personaggio.Personaggio;
 import com.example.antichidelitti.tag.Tag;
 import com.example.antichidelitti.tema.Tema;
 import jakarta.persistence.*;
@@ -40,6 +41,11 @@ public class Bozza {
     @ManyToOne
     @JoinColumn(name = "luogo_id")
     private Luogo luogo;
+    @ManyToMany
+    @JoinTable(name = "saved_character",
+            joinColumns = @JoinColumn(name = "saved_id"),
+            inverseJoinColumns = @JoinColumn(name = "character_id"))
+    private List<Personaggio> personaggioList;
     private LocalDate created_at;
 }
 

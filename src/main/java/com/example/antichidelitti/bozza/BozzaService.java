@@ -6,6 +6,8 @@ import com.example.antichidelitti.exception.NotFoundException;
 import com.example.antichidelitti.luogo.LuogoRepository;
 import com.example.antichidelitti.payloads.entities.BozzaDTO;
 import com.example.antichidelitti.payloads.entities.TagDTO;
+import com.example.antichidelitti.personaggio.Personaggio;
+import com.example.antichidelitti.personaggio.PersonaggioRepository;
 import com.example.antichidelitti.tag.Tag;
 import com.example.antichidelitti.tag.TagRepository;
 import com.example.antichidelitti.tema.Tema;
@@ -29,6 +31,8 @@ public class BozzaService {
     CategoriaRepository categoriaRepository;
     @Autowired
     LuogoRepository luogoRepository;
+    @Autowired
+    PersonaggioRepository personaggioRepository;
     public void save(BozzaDTO body){
         Bozza found = new Bozza();
         found.setTesto(body.testo());
@@ -36,20 +40,38 @@ public class BozzaService {
         List<Tag> tagList = new ArrayList<>();
         List<Tema> temaList = new ArrayList<>();
         List<Categoria> categoriaList = new ArrayList<>();
+        List<Personaggio> personaggioList = new ArrayList<>();
 
-        found.setLuogo(luogoRepository.findById(body.luogo_id()).get());
-        for(Long t : body.tag_id()){
-            tagList.add(tagRepository.findById(t).get());
+        if(body.luogo_id()!=0){
+            found.setLuogo(luogoRepository.findById(body.luogo_id()).get());
+        }
+
+        if(!body.tag_id().isEmpty()){
+            for(Long t : body.tag_id()){
+                tagList.add(tagRepository.findById(t).get());
+            }
         }
         found.setTagList(tagList);
-        for(Long t : body.category_id()){
-            categoriaList.add(categoriaRepository.findById(t).get());
+        if(!body.category_id().isEmpty()){
+            for(Long t : body.category_id()){
+                categoriaList.add(categoriaRepository.findById(t).get());
+            }
         }
+
         found.setCategoriaList(categoriaList);
-        for(Long t : body.theme_id()){
-            temaList.add(temaRepository.findById(t).get());
+        if(!body.theme_id().isEmpty()){
+            for(Long t : body.theme_id()){
+                temaList.add(temaRepository.findById(t).get());
+            }
         }
+
         found.setTemaList(temaList);
+        if(!body.personaggio_id().isEmpty()) {
+            for (Long t : body.personaggio_id()) {
+                personaggioList.add(personaggioRepository.findById(t).get());
+            }
+        }
+        found.setPersonaggioList(personaggioList);
         List<String> imageList = new ArrayList<>(body.imageList());
         found.setTemaList(temaList);
         found.setImages(imageList);
@@ -71,20 +93,37 @@ public class BozzaService {
         List<Tag> tagList = new ArrayList<>();
         List<Tema> temaList = new ArrayList<>();
         List<Categoria> categoriaList = new ArrayList<>();
+        List<Personaggio> personaggioList = new ArrayList<>();
+        if(body.luogo_id()!=0){
+            found.setLuogo(luogoRepository.findById(body.luogo_id()).get());
+        }
 
-        found.setLuogo(luogoRepository.findById(body.luogo_id()).get());
-        for(Long t : body.tag_id()){
-            tagList.add(tagRepository.findById(t).get());
+        if(!body.tag_id().isEmpty()){
+            for(Long t : body.tag_id()){
+                tagList.add(tagRepository.findById(t).get());
+            }
         }
         found.setTagList(tagList);
-        for(Long t : body.category_id()){
-            categoriaList.add(categoriaRepository.findById(t).get());
+        if(!body.category_id().isEmpty()){
+            for(Long t : body.category_id()){
+                categoriaList.add(categoriaRepository.findById(t).get());
+            }
         }
+
         found.setCategoriaList(categoriaList);
-        for(Long t : body.theme_id()){
-            temaList.add(temaRepository.findById(t).get());
+        if(!body.theme_id().isEmpty()){
+            for(Long t : body.theme_id()){
+                temaList.add(temaRepository.findById(t).get());
+            }
         }
+
         found.setTemaList(temaList);
+        if(!body.personaggio_id().isEmpty()) {
+            for (Long t : body.personaggio_id()) {
+                personaggioList.add(personaggioRepository.findById(t).get());
+            }
+        }
+        found.setPersonaggioList(personaggioList);
         List<String> imageList = new ArrayList<>(body.imageList());
         found.setTemaList(temaList);
 found.setImages(imageList);
