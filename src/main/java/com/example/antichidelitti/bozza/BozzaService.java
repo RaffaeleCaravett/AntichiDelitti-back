@@ -1,5 +1,6 @@
 package com.example.antichidelitti.bozza;
 
+import com.example.antichidelitti.articolo.Articolo;
 import com.example.antichidelitti.categoria.Categoria;
 import com.example.antichidelitti.categoria.CategoriaRepository;
 import com.example.antichidelitti.exception.NotFoundException;
@@ -13,6 +14,10 @@ import com.example.antichidelitti.tag.TagRepository;
 import com.example.antichidelitti.tema.Tema;
 import com.example.antichidelitti.tema.TemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -82,11 +87,12 @@ public class BozzaService {
     public Bozza findById(long id) throws NotFoundException {
         return bozzaRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
-    public List<Bozza> getAll(){
-        return bozzaRepository.findAll();
+    public Page<Bozza> getAll(int page, int size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        return bozzaRepository.findAll(pageable);
     }
 
-    public Bozza findByIdAndUpdate(long id, BozzaDTO body) throws NotFoundException {
+        public Bozza findByIdAndUpdate(long id, BozzaDTO body) throws NotFoundException {
         Bozza found = bozzaRepository.findById(id).get();
         found.setTesto(body.testo());
         found.setTitolo(body.titolo());
