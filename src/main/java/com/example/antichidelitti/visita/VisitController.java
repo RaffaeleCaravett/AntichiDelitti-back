@@ -58,8 +58,7 @@ public class VisitController {
     public List<Tema> findAllThemas(){
         return temaService.getAll();
     }
-    @GetMapping("/filtered")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/filtered")
     public List<Articolo> getArticlesFiltered(@RequestBody ArticoloFilterDTO articoloFilterDTO){
         return articoloService.getAllFiltered(articoloFilterDTO);
     }
