@@ -5,6 +5,7 @@ import com.example.antichidelitti.bozza.BozzaService;
 import com.example.antichidelitti.exception.BadRequestException;
 import com.example.antichidelitti.exception.NotFoundException;
 import com.example.antichidelitti.payloads.entities.ArticoloDTO;
+import com.example.antichidelitti.payloads.entities.ArticoloFilterDTO;
 import com.example.antichidelitti.payloads.entities.BozzaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,5 +53,10 @@ public class ArticoloController {
     @ResponseStatus(HttpStatus.NO_CONTENT) // <-- 204 NO CONTENT
     public void findByIdAndDelete(@PathVariable int id) throws NotFoundException {
         articoloService.findByIdAndDelete(id);
+    }
+    @GetMapping("/filtered")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<Articolo> getArticlesFiltered(@RequestBody ArticoloFilterDTO articoloFilterDTO){
+        return articoloService.getAllFiltered(articoloFilterDTO);
     }
 }

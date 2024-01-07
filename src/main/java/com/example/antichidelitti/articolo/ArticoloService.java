@@ -5,6 +5,7 @@ import com.example.antichidelitti.categoria.CategoriaRepository;
 import com.example.antichidelitti.exception.NotFoundException;
 import com.example.antichidelitti.luogo.LuogoRepository;
 import com.example.antichidelitti.payloads.entities.ArticoloDTO;
+import com.example.antichidelitti.payloads.entities.ArticoloFilterDTO;
 import com.example.antichidelitti.payloads.entities.TagDTO;
 import com.example.antichidelitti.personaggio.Personaggio;
 import com.example.antichidelitti.personaggio.PersonaggioRepository;
@@ -135,5 +136,16 @@ if(!body.tag_id().isEmpty()){
     public void findByIdAndDelete(long id) throws NotFoundException {
         Articolo found = this.findById(id);
         articoloRepository.delete(found);
+    }
+    public  List<Articolo> getAllFiltered(ArticoloFilterDTO articoloFilterDTO) {
+        if(articoloFilterDTO.categoria_id()!=0&&articoloFilterDTO.tema_id()!=0){
+            return articoloRepository.findByTitoloAndLuogo_LuogoContainsAndTemaList_IdAndCategoriaList_Id(articoloFilterDTO.titolo(),articoloFilterDTO.luogo(), articoloFilterDTO.tema_id(), articoloFilterDTO.categoria_id());
+        }else if(articoloFilterDTO.categoria_id()==0&&articoloFilterDTO.tema_id()!=0){
+            return articoloRepository.findByTitoloAndLuogo_LuogoContainsAndTemaList_Id(articoloFilterDTO.titolo(),articoloFilterDTO.luogo(), articoloFilterDTO.tema_id());
+        }else if(articoloFilterDTO.categoria_id()!=0&&articoloFilterDTO.tema_id()==0){
+            return articoloRepository.findByTitoloAndLuogo_LuogoContainsAndCategoriaList_Id(articoloFilterDTO.titolo(),articoloFilterDTO.luogo(),articoloFilterDTO.categoria_id());
+        }else {
+            return articoloRepository.findByTitoloAndLuogo_LuogoContains(articoloFilterDTO.titolo(),articoloFilterDTO.luogo());
+        }
     }
 }
