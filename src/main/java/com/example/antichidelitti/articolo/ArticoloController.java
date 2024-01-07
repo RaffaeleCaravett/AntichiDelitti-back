@@ -54,9 +54,5 @@ public class ArticoloController {
     public void findByIdAndDelete(@PathVariable int id) throws NotFoundException {
         articoloService.findByIdAndDelete(id);
     }
-    @GetMapping("/filtered")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Articolo> getArticlesFiltered(@RequestBody ArticoloFilterDTO articoloFilterDTO){
-        return articoloService.getAllFiltered(articoloFilterDTO);
-    }
+
 }

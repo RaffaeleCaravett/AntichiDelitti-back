@@ -6,6 +6,7 @@ import com.example.antichidelitti.categoria.Categoria;
 import com.example.antichidelitti.categoria.CategoriaService;
 import com.example.antichidelitti.luogo.Luogo;
 import com.example.antichidelitti.luogo.LuogoService;
+import com.example.antichidelitti.payloads.entities.ArticoloFilterDTO;
 import com.example.antichidelitti.tema.Tema;
 import com.example.antichidelitti.tema.TemaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,10 @@ public class VisitController {
     @GetMapping("/themas")
     public List<Tema> findAllThemas(){
         return temaService.getAll();
+    }
+    @GetMapping("/filtered")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<Articolo> getArticlesFiltered(@RequestBody ArticoloFilterDTO articoloFilterDTO){
+        return articoloService.getAllFiltered(articoloFilterDTO);
     }
 }
