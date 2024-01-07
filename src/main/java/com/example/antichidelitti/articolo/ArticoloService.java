@@ -138,14 +138,24 @@ if(!body.tag_id().isEmpty()){
         articoloRepository.delete(found);
     }
     public  List<Articolo> getAllFiltered(ArticoloFilterDTO articoloFilterDTO) {
-        if(articoloFilterDTO.categoria_id()!=0&&articoloFilterDTO.tema_id()!=0){
-            return articoloRepository.findByTitoloAndLuogo_LuogoContainsAndTemaList_IdAndCategoriaList_Id(articoloFilterDTO.titolo(),articoloFilterDTO.luogo(), articoloFilterDTO.tema_id(), articoloFilterDTO.categoria_id());
-        }else if(articoloFilterDTO.categoria_id()==0&&articoloFilterDTO.tema_id()!=0){
-            return articoloRepository.findByTitoloAndLuogo_LuogoContainsAndTemaList_Id(articoloFilterDTO.titolo(),articoloFilterDTO.luogo(), articoloFilterDTO.tema_id());
-        }else if(articoloFilterDTO.categoria_id()!=0&&articoloFilterDTO.tema_id()==0){
-            return articoloRepository.findByTitoloAndLuogo_LuogoContainsAndCategoriaList_Id(articoloFilterDTO.titolo(),articoloFilterDTO.luogo(),articoloFilterDTO.categoria_id());
-        }else {
-            return articoloRepository.findByTitoloAndLuogo_LuogoContains(articoloFilterDTO.titolo(),articoloFilterDTO.luogo());
+        if(articoloFilterDTO.categoria_id()!=0&&articoloFilterDTO.tema_id()!=0&&articoloFilterDTO.luogo_id()!=0){
+            return articoloRepository.findByTitoloContainsAndLuogo_IdAndTemaList_IdAndCategoriaList_Id(articoloFilterDTO.titolo(),articoloFilterDTO.luogo_id(), articoloFilterDTO.tema_id(), articoloFilterDTO.categoria_id());
+        }else if(articoloFilterDTO.luogo_id()==0&&articoloFilterDTO.categoria_id()==0&&articoloFilterDTO.tema_id()!=0){
+            return articoloRepository.findByTitoloContainsAndTemaList_Id(articoloFilterDTO.titolo(), articoloFilterDTO.tema_id());
+        }else if(articoloFilterDTO.luogo_id()==0&&articoloFilterDTO.categoria_id()!=0&&articoloFilterDTO.tema_id()!=0){
+            return articoloRepository.findByTitoloContainsAndTemaList_IdAndCategoriaList_Id(articoloFilterDTO.titolo(),articoloFilterDTO.tema_id(),articoloFilterDTO.categoria_id());
+        }else if(articoloFilterDTO.luogo_id()==0&&articoloFilterDTO.categoria_id()!=0&&articoloFilterDTO.tema_id()==0){
+            return articoloRepository.findByTitoloContainsAndCategoriaList_Id(articoloFilterDTO.titolo(), articoloFilterDTO.categoria_id());
+        }else if(articoloFilterDTO.luogo_id()!=0&&articoloFilterDTO.categoria_id()!=0&&articoloFilterDTO.tema_id()==0){
+            return articoloRepository.findByTitoloContainsAndLuogo_IdAndCategoriaList_Id(articoloFilterDTO.titolo(),articoloFilterDTO.luogo_id(),articoloFilterDTO.categoria_id());
+        }else if(articoloFilterDTO.luogo_id()!=0&&articoloFilterDTO.categoria_id()==0&&articoloFilterDTO.tema_id()==0) {
+        return articoloRepository.findByTitoloContainsAndLuogo_Id(articoloFilterDTO.titolo(),articoloFilterDTO.luogo_id());
+        }else if(articoloFilterDTO.luogo_id()!=0&&articoloFilterDTO.categoria_id()==0&&articoloFilterDTO.tema_id()!=0){
+            return articoloRepository.findByTitoloContainsAndLuogo_IdAndTemaList_Id(articoloFilterDTO.titolo(),articoloFilterDTO.luogo_id(),articoloFilterDTO.tema_id());
+        }else
+            {
+                return articoloRepository.findByTitoloContains(articoloFilterDTO.titolo());
+            }
         }
     }
-}
+

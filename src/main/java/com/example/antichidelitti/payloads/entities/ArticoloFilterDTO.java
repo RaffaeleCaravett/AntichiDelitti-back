@@ -6,7 +6,7 @@ import com.example.antichidelitti.tema.Tema;
 
 public record ArticoloFilterDTO(
         String titolo,
-        String luogo,
+        long luogo_id,
         long tema_id,
         long categoria_id
 ) {

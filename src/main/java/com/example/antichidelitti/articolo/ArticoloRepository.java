@@ -8,10 +8,15 @@ import java.util.List;
 @Repository
 public interface ArticoloRepository extends JpaRepository<Articolo,Long> {
 
-List<Articolo> findByTitoloAndLuogo_LuogoContainsAndTemaList_IdAndCategoriaList_Id(String titolo, String luogo, Long thema, Long categoria);
-    List<Articolo> findByTitoloAndLuogo_LuogoContainsAndTemaList_Id(String titolo, String luogo, Long thema);
-    List<Articolo> findByTitoloAndLuogo_LuogoContainsAndCategoriaList_Id(String titolo, String luogo, Long categoria);
-    List<Articolo> findByTitoloAndLuogo_LuogoContains(String titolo, String luogo);
+List<Articolo> findByTitoloContainsAndLuogo_IdAndTemaList_IdAndCategoriaList_Id(String titolo, Long luogo, Long thema, Long categoria);
+    List<Articolo> findByTitoloContainsAndLuogo_IdAndTemaList_Id(String titolo, Long luogo, Long thema);
+    List<Articolo> findByTitoloContainsAndLuogo_IdAndCategoriaList_Id(String titolo, Long luogo, Long categoria);
+    List<Articolo> findByTitoloContainsAndCategoriaList_Id(String titolo, Long categoria);
+    List<Articolo> findByTitoloContainsAndTemaList_Id(String titolo,  Long thema);
+    List<Articolo> findByTitoloContainsAndTemaList_IdAndCategoriaList_Id(String titolo, Long thema, Long categoria);
+    List<Articolo> findByTitoloContainsAndLuogo_Id(String titolo, Long luogo);
+    List<Articolo> findByTitoloContains(String titolo);
+
 
 
 }
